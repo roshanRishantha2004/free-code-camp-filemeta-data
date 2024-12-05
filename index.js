@@ -4,6 +4,7 @@ const multer = require('multer');
 
 const app = express();
 
+app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
 
@@ -18,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/views/index.html')
+    res.sendFile(__dirname + '/views/index.html')
 });
 
 app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
@@ -31,6 +32,6 @@ app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
         type: req.file.mimetype,     
         size: req.file.size 
     });
-  });
+});
 
 app.listen(3000, () => console.log('Server is listening on port 3000'));
